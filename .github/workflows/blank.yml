@@ -17,7 +17,7 @@ jobs:
             const pullRequest = context.payload.pull_request
             const repository = context.repo
 
-            await github.pulls.merge({
+            github.pulls.merge({
               merge_method: "merge",
               owner: repository.owner,
               pull_number: pullRequest.number,
