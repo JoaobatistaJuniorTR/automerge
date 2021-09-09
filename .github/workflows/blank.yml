@@ -5,21 +5,16 @@ name: AutoMerge
 on:
   workflow_dispatch:
   pull_request:
-    branches: [ main ]    
+    branches: [ main ]
+  check_suite:
+    types:
+      - completed
   
 jobs:
   merge:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v4
-        with:
-          script: |
-            const pullRequest = context.payload.pull_request
-            const repository = context.repo
-
-            github.pulls.merge({
-              merge_method: "merge",
-              owner: repository.owner,
-              pull_number: pullRequest.number,
-              repo: repository.repo,
-            })
+      - name: automerge
+        uses: "pascalgn/automerge-action@v0.14.3"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
