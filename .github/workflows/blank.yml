@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
-      - "folder-allowed/**"
       - "!folder-denied/**"
+      - "folder-allowed/**"
     branches: [ main ]
     types:
       - labeled
