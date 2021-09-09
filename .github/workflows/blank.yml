@@ -6,7 +6,6 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
-      - "!folder-denied/**"
       - "folder-allowed/**"
     branches: [ main ]
     types:
@@ -16,7 +15,20 @@ on:
       - completed
   
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      taxone-core: ${{ steps.filter.outputs.taxone-core }}
+    steps:
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with: 
+          filters: |
+            taxone-core:
+              - 'folder-denied/**'
   merge:
+    needs: changes
+    if: ${{ needs.changes.outputs.taxone-core == 'false' }}
     runs-on: ubuntu-latest
     steps:
       - name: automerge
