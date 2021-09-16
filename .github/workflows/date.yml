@@ -18,6 +18,6 @@ jobs:
     steps:
       - name: test weekday
         run: |
-          echo "Day of Week" + ${{needs.weekday.outputs.day-of-week}}
+          echo "Day of Week" + ${{needs.weekday.outputs.dayOfWeek}}
           echo "If (string): " + ${{needs.weekday.outputs.day-of-week != '4'}}
           echo "If (number): " + ${{needs.weekday.outputs.day-of-week != 4}}
