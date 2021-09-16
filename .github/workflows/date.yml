@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  weekday-job:
+  weekday:
     runs-on: ubuntu-latest
     outputs:
       weekday: ${{steps.weekday.outputs.dayOfWeek}}
@@ -13,11 +13,11 @@ jobs:
         id: weekday
         run: echo "::set-output name=dayOfWeek::$(date +'%u')"
   test:
-    needs: weekday-job
+    needs: weekday
     runs-on: ubuntu-latest
     steps:
       - name: test weekday
         run: |
-          echo "Day of Week" + ${{needs.weekday-job.outputs.weekday}}
-          echo "If (string): " + ${{needs.weekday-job.outputs.weekday == '4'}}
-          echo "If (number): " + ${{needs.weekday-job.outputs.weekday == 4}}
+          echo "Day of Week" + ${{needs.weekday.outputs.weekday}}
+          echo "If (string): " + ${{needs.weekday.outputs.weekday == '4'}}
+          echo "If (number): " + ${{needs.weekday.outputs.weekday == 4}}
