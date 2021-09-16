@@ -18,11 +18,13 @@ jobs:
   weekday:
     runs-on: ubuntu-latest
     outputs:
-      day-of-week: ${{steps.weekday.outputs.dayOfWeek}}
+      day-of-week: ${{steps.day-of-week.outputs.dayOfWeek}}
     steps:
       - name: Getday of week
         id: day-of-week
-        run: echo "::set-output name=dayOfWeek::$(date +'%u')"
+        run: |
+          echo "::set-output name=dayOfWeek::$(date +'%u')"
+          echo: $(date +'%u') [1 is Monday]
         
   changes:
     runs-on: ubuntu-latest
@@ -38,7 +40,7 @@ jobs:
    
   merge:
     needs: [weekday,changes]
-    if: ${{ needs.changes.outputs.taxone-core == 'false' && needs.weekday.outputs.day-of-week != '4' }}
+    if: ${{ needs.changes.outputs.taxone-core == 'false' && needs.weekday.outputs.day-of-week != 4 }}
     runs-on: ubuntu-latest
     steps:
       - name: create comment
