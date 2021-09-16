@@ -24,7 +24,7 @@ jobs:
         id: day-of-week
         run: |
           echo "::set-output name=dayOfWeek::$(date +'%u')"
-          echo: $(date +'%u') [1 is Monday]
+          echo $(date +'%u') [1 is Monday]
         
   changes:
     runs-on: ubuntu-latest
