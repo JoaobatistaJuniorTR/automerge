@@ -42,7 +42,8 @@ jobs:
    
   merge:
     needs: [weekday,changes]
-    if: ${{ needs.changes.outputs.taxone-core == 'false' && needs.weekday.outputs.day-of-week != 4 }}
+    #if: ${{ needs.changes.outputs.taxone-core == 'false' && needs.weekday.outputs.day-of-week != 4 }}
+    if: ${{ needs.changes.outputs.taxone-core == 'false' }}
     runs-on: ubuntu-latest
     steps:
       - name: create comment
