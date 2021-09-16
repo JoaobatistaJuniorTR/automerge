@@ -60,5 +60,5 @@ jobs:
           MERGE_RETRIES: "10"
           MERGE_RETRY_SLEEP: "60000"
           MERGE_REQUIRED_APPROVALS: 0
-          MERGE_COMMIT_MESSAGE: "pull-request-title-and-description {pullRequest.number}"
+          MERGE_COMMIT_MESSAGE: "pull-request-title-and-description (#{pullRequest.number})"
           
