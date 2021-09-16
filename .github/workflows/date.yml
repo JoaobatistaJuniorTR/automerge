@@ -11,7 +11,9 @@ jobs:
     steps:
       - name: Get day of week
         id: weekday
-        run: echo "::set-output name=dayOfWeek::$(date +'%u')"
+        run: |
+          echo "::set-output name=dayOfWeek::$(date +'%u')"
+          echo: $(date +'%u') [1 is Monday]
   test:
     needs: weekday
     runs-on: ubuntu-latest
