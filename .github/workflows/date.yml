@@ -13,7 +13,7 @@ jobs:
         id: weekday
         run: |
           echo "::set-output name=dayOfWeek::$(date +'%u')"
-          echo: $(date +'%u') [1 is Monday]
+          echo $(date +'%u') [1 is Monday]
   test:
     needs: weekday
     runs-on: ubuntu-latest
