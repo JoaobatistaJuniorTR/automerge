@@ -1,18 +1,23 @@
-name: CI
+name: Week Day
 
 on: 
   workflow_dispatch:
 
 jobs:
-  build:
+  weekday:
     runs-on: ubuntu-latest
-
+    outputs:
+      day-of-week: ${{steps.weekday.outputs.dayOfWeek}}
     steps:
-      - name: Get current date
-        id: date
-        run: echo "::set-output name=date::$(date +'%a')"
-      - name: Test with environment variables
-        run: echo ${{ steps.date.outputs.date }}
-        env:
-          TAG_NAME: nightly-tag-${{ steps.date.outputs.date }}
-          RELEASE_NAME: nightly-release-${{ steps.date.outputs.date }}
+      - name: Get day of week
+        id: day-of-week
+        run: echo "::set-output name=dayOfWeek::$(date +'%u')"
+  test:
+    needs: weekday
+    runs-on: ubuntu-latest
+    steps:
+      - name: test weekday
+        run: |
+          echo "Day of Week" + ${{needs.weekday.outputs.day-of-week}}
+          echo "If (string): " + ${{needs.weekday.outputs.day-of-week != '4'}}
+          echo "If (number): " + ${{needs.weekday.outputs.day-of-week != 4}}
