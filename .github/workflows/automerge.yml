@@ -15,6 +15,15 @@ on:
       - completed
   
 jobs:
+  weekday:
+    runs-on: ubuntu-latest
+    outputs:
+      day-of-week: ${{steps.weekday.outputs.dayOfWeek}}
+    steps:
+      - name: Getday of week
+        id: day-of-week
+        run: echo "::set-output name=dayOfWeek::$(date +'%u')"
+        
   changes:
     runs-on: ubuntu-latest
     outputs:
@@ -25,10 +34,11 @@ jobs:
         with: 
           filters: |
             taxone-core:
-              - 'folder-denied/**'
+              - 'folder-denied/**'             
+   
   merge:
-    needs: changes
-    if: ${{ needs.changes.outputs.taxone-core == 'false' }}
+    needs: [weekday,changes]
+    if: ${{ needs.changes.outputs.taxone-core == 'false' && needs.weekday.outputs.day-of-week != '4' }}
     runs-on: ubuntu-latest
     steps:
       - name: create comment
